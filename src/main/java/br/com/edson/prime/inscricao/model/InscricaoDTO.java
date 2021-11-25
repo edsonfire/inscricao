@@ -1,6 +1,8 @@
 package br.com.edson.prime.inscricao.model;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,9 +17,9 @@ public class InscricaoDTO {
 
 	
 	private Long id;
-	
+	@NotEmpty(message = "informe o nome")
 	private String nome;
-	
+	@Email(message = "Informe um email, válido")
 	private String email;
 	
 	private String mae;
@@ -27,6 +29,8 @@ public class InscricaoDTO {
 	private int idade;
 	
 	private DepartamentoEnum departamento;
+	
+	private String telefone;
 	
 	
 	
@@ -39,6 +43,7 @@ public class InscricaoDTO {
 		this.pai = insc.getPai();
 		this.idade = insc.getIdade();
 		this.departamento = insc.getDepartamento();
+		this.telefone = insc.getTelefone();
 	}
 	
 }

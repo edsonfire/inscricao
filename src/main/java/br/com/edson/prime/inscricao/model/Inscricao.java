@@ -31,6 +31,8 @@ public class Inscricao {
 	private int idade;
 	
 	private DepartamentoEnum departamento;
+	
+	private String telefone;
 
 	public Inscricao(InscricaoDTO dto) {
 	
@@ -41,6 +43,7 @@ public class Inscricao {
 		this.pai = dto.getPai();
 		this.idade = dto.getIdade();
 		this.departamento = dto.getDepartamento();
+		this.telefone = dto.getTelefone();
 	}
 	
 	
