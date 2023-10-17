@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>br.com.edson.prime.desafio</groupId>
 	<artifactId>inscricao</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>inscricao</name>
 	<description>inscrições retiro</description>
 	<properties>
@@ -55,6 +55,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.1</version>
 		</dependency>
 	</dependencies>
 

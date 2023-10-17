@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.edson.prime.inscricao.model.Evento;
+import br.com.edson.prime.inscricao.model.Igreja;
 import br.com.edson.prime.inscricao.service.EventoService;
 import br.com.edson.prime.inscricao.util.Message;
 
@@ -37,6 +38,14 @@ public class EventoController {
 	}
 	
 	
+	@GetMapping("/all/dept/{id}")
+	public ResponseEntity<List<Evento>> getAll(@PathVariable int id){
+		
+		return ResponseEntity.ok().body(service.getAllByDept(id));
+		
+	}
+	
+	
 	
 	
 	
@@ -45,6 +54,9 @@ public class EventoController {
 		
 		
 
+		if(!service.duplicateEvento(dto)) {
+		
+		
 			Evento dtoResponse = service.save(dto);
 		if(dtoResponse.getId()>0) {
 			return ResponseEntity.status(HttpStatus.CREATED).body(dtoResponse);
@@ -54,7 +66,13 @@ public class EventoController {
 					.mensagem("falhao ao realizar a operação").build()
 					);
 		}
-		
+		}else {
+			
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+					Message.builder()
+					.mensagem("Já existe um evento para o mesmo dia e período").build()
+					);
+		}
 		
 		
 		
@@ -107,6 +125,21 @@ public class EventoController {
 					);
 		}
 		
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<?> find(@PathVariable int id) {
+
+		Evento a = service.getById(id);
+
+		if (a != null) {
+			return ResponseEntity.ok(a);
+		} else {
+
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					.body(Message.builder().mensagem("Falha ao realizar a operação!").build());
+		}
+
 	}
 	
 

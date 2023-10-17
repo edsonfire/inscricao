@@ -17,21 +17,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.edson.prime.inscricao.model.Departamento;
-import br.com.edson.prime.inscricao.model.Igreja;
-import br.com.edson.prime.inscricao.service.DepartamentoService;
+import br.com.edson.prime.inscricao.model.LocalEvento;
+import br.com.edson.prime.inscricao.service.LocalEventoService;
 import br.com.edson.prime.inscricao.util.Message;
 
 
 @RestController
-@RequestMapping("/adtag/api/departamento")
-public class DepartamentoController {
+@RequestMapping("/adtag/api/localevento")
+public class LocalEventoController {
 
 	@Autowired
-	private DepartamentoService service;
+	private LocalEventoService service;
 	
 	
 	@GetMapping("/all")
-	public ResponseEntity<List<Departamento>> getAll(){
+	public ResponseEntity<List<LocalEvento>> getAll(){
 		
 		return ResponseEntity.ok().body(service.getAll());
 		
@@ -42,11 +42,11 @@ public class DepartamentoController {
 	
 	
 	@PostMapping
-	public ResponseEntity<?> create(@Valid @RequestBody Departamento dto){
+	public ResponseEntity<?> create(@Valid @RequestBody LocalEvento dto){
 		
 		
 
-			Departamento dtoResponse = service.save(dto);
+			LocalEvento dtoResponse = service.save(dto);
 		if(dtoResponse.getId()>0) {
 			return ResponseEntity.status(HttpStatus.CREATED).body(dtoResponse);
 		}else {
@@ -62,11 +62,11 @@ public class DepartamentoController {
 	}
 	
 	@PutMapping
-	public ResponseEntity<?> update(@Valid @RequestBody Departamento dto){
+	public ResponseEntity<?> update(@Valid @RequestBody LocalEvento dto){
 		
 		
 		if(dto.getId()>0) {
-			Departamento m = service.update(dto);
+			LocalEvento m = service.update(dto);
 			
 			if(m.getId()>0) {
 				
@@ -83,7 +83,7 @@ public class DepartamentoController {
 			
 			 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
 					Message.builder()
-					.mensagem("Departamento inválido").build()
+					.mensagem("LocalEvento inválido").build()
 					);
 		}
 		
@@ -111,11 +111,12 @@ public class DepartamentoController {
 	}
 	
 	
+
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> find(@PathVariable int id) {
 
-		Departamento a = service.getById(id);
+		LocalEvento a = service.getById(id);
 
 		if (a != null) {
 			return ResponseEntity.ok(a);

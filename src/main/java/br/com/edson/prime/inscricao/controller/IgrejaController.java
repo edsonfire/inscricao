@@ -20,94 +20,83 @@ import br.com.edson.prime.inscricao.model.Igreja;
 import br.com.edson.prime.inscricao.service.IgrejaService;
 import br.com.edson.prime.inscricao.util.Message;
 
-
 @RestController
 @RequestMapping("/adtag/api/igreja")
 public class IgrejaController {
 
 	@Autowired
 	private IgrejaService service;
-	
-	
+
 	@GetMapping("/all")
-	public ResponseEntity<List<Igreja>> getAll(){
-		
+	public ResponseEntity<List<Igreja>> getAll() {
+
 		return ResponseEntity.ok().body(service.getAll());
-		
+
 	}
-	
-	
-	
-	
-	
+
 	@PostMapping
-	public ResponseEntity<?> create(@Valid @RequestBody Igreja dto){
-		
-		
+	public ResponseEntity<?> create(@Valid @RequestBody Igreja dto) {
 
-			Igreja dtoResponse = service.save(dto);
-		if(dtoResponse.getId()>0) {
+		Igreja dtoResponse = service.save(dto);
+		if (dtoResponse.getId() > 0) {
 			return ResponseEntity.status(HttpStatus.CREATED).body(dtoResponse);
-		}else {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
-					Message.builder()
-					.mensagem("falhao ao realizar a operação").build()
-					);
+		} else {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(Message.builder().mensagem("falhao ao realizar a operação").build());
 		}
-		
-		
-		
-		
+
 	}
-	
+
 	@PutMapping
-	public ResponseEntity<?> update(@Valid @RequestBody Igreja dto){
-		
-		
-		if(dto.getId()>0) {
+	public ResponseEntity<?> update(@Valid @RequestBody Igreja dto) {
+
+		if (dto.getId() > 0) {
 			Igreja m = service.update(dto);
-			
-			if(m.getId()>0) {
-				
+
+			if (m.getId() > 0) {
+
 				return ResponseEntity.ok().body(m);
-			}else {
-				 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
-							Message.builder()
-							.mensagem("Operação não realizada").build()
-							);
+			} else {
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+						.body(Message.builder().mensagem("Operação não realizada").build());
 			}
-			
-			
-		}else {
-			
-			 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-					Message.builder()
-					.mensagem("Igreja inválido").build()
-					);
+
+		} else {
+
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					.body(Message.builder().mensagem("Igreja inválido").build());
 		}
-		
+
 	}
-	
-	
+
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> delete(@PathVariable Long id){
-		
-		if(	service.delete(id)) {
+	public ResponseEntity<?> delete(@PathVariable Long id) {
 
-			 return ResponseEntity.status(HttpStatus.OK).body(
-					Message.builder()
-					.mensagem("Excuído com sucesso!").build()
-					);
-		}else {
-			
+		if (service.delete(id)) {
 
-			 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-					Message.builder()
-					.mensagem("Falha ao realizar a operação!").build()
-					);
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(Message.builder().mensagem("Excuído com sucesso!").build());
+		} else {
+
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					.body(Message.builder().mensagem("Falha ao realizar a operação!").build());
 		}
-		
+
 	}
-	
+
+	@GetMapping("/{id}")
+	public ResponseEntity<?> find(@PathVariable Long id) {
+
+		Igreja a = service.getById(id);
+
+		if (a != null) {
+			return ResponseEntity.ok(a);
+		} else {
+
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					.body(Message.builder().mensagem("Falha ao realizar a operação!").build());
+		}
+
+	}
 
 }

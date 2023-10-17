@@ -23,8 +23,8 @@ import br.com.edson.prime.inscricao.util.Message;
 
 
 @RestController
-@RequestMapping("/adtag/api/departamento")
-public class DepartamentoController {
+@RequestMapping("/adtag/api/pedido")
+public class PedidoController {
 
 	@Autowired
 	private DepartamentoService service;
